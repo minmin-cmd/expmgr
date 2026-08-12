@@ -208,6 +208,26 @@ input,select,textarea{font-family:inherit;font-size:14px;}
   font-size:13px;z-index:100;opacity:0;pointer-events:none;transition:all .25s;
 }
 .toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+
+/* 紧急提醒条 */
+.alert-bar{
+  display:flex;align-items:center;gap:10px;margin:14px 16px 0;
+  background:linear-gradient(135deg,#C62828,#E53935);color:#fff;
+  border-radius:12px;padding:12px 14px;font-size:13px;
+  box-shadow:0 4px 12px rgba(198,40,40,.25);animation:alertPulse 2s infinite;
+}
+@keyframes alertPulse{0%,100%{box-shadow:0 4px 12px rgba(198,40,40,.25);}50%{box-shadow:0 4px 20px rgba(198,40,40,.45);}}
+.alert-bar .alert-icon{font-size:20px;flex-shrink:0;}
+.alert-bar .alert-text{flex:1;line-height:1.5;}
+.alert-bar .alert-text b{font-size:15px;}
+.alert-bar .alert-close{
+  color:rgba(255,255,255,.8);font-size:18px;flex-shrink:0;cursor:pointer;padding:2px;
+}
+.reminder .urgent-tag{
+  display:inline-block;background:#C62828;color:#fff;font-size:10px;font-weight:600;
+  padding:1px 6px;border-radius:8px;margin-left:6px;vertical-align:middle;animation:blink 1s infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
 </style>
 </head>
 <body>
@@ -240,6 +260,13 @@ input,select,textarea{font-family:inherit;font-size:14px;}
     <div class="num" id="cnt-ok">0</div><div class="label">物品</div><div class="dotbar"><i style="width:100%"></i></div>
   </div>
 </section>
+
+<!-- 紧急提醒条（3天内到期） -->
+<div class="alert-bar" id="alertBar" style="display:none;">
+  <span class="alert-icon">🚨</span>
+  <span class="alert-text" id="alertText"></span>
+  <span class="alert-close" id="alertClose">✕</span>
+</div>
 
 <!-- 快捷操作 -->
 <div class="quick-actions">
@@ -331,7 +358,7 @@ input,select,textarea{font-family:inherit;font-size:14px;}
 
 <script>
 // ===== 数据层 =====
-var STORAGE_KEY = 'expmgr_items_v3';
+var STORAGE_KEY = 'expmgr_items_v4';
 var LOG_KEY = 'expmgr_logs_v1';
 var SETTINGS_KEY = 'expmgr_settings_v1';
 
@@ -371,7 +398,14 @@ var DEFAULT_ITEMS = [
 var DEFAULT_SETTINGS = {dept:'心内一科',warningDays:90,urgentDays:30,severeDays:7,lastInventory:'2026-07-03'};
 
 function loadItems(){
-  try{var s=localStorage.getItem(STORAGE_KEY);if(s){var p=JSON.parse(s);if(Array.isArray(p)&&p.length>0)return p;}}catch(e){}
+  try{
+    var s=localStorage.getItem(STORAGE_KEY);
+    if(s!==null){
+      var p=JSON.parse(s);
+      // 数组（包括空数组，表示已清空库存）都作为有效状态返回
+      if(Array.isArray(p)) return p;
+    }
+  }catch(e){}
   return DEFAULT_ITEMS.slice();
 }
 function saveItems(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(ITEMS));}catch(e){}}
@@ -435,11 +469,33 @@ function renderList(){
   var html='';
   filtered.forEach(function(it){
     var ct=it.cat==='药品'?'急救药品':'一次性用物';
-    html+='<div class="reminder lv-'+it.level+'" data-idx="'+it.origIdx+'"><span class="mark"></span><div class="info"><div class="name">'+it.name+'</div><div class="meta"><span>'+ct+'</span><span>'+it.batch+'</span><span>'+it.qty+'</span></div></div><div class="right"><div class="days">'+formatDays(it.days)+'</div><div class="date">'+it.expire+'</div></div></div>';
+    var urgentTag=(it.days<=3)?'<span class="urgent-tag">急</span>':'';
+    html+='<div class="reminder lv-'+it.level+'" data-idx="'+it.origIdx+'"><span class="mark"></span><div class="info"><div class="name">'+it.name+urgentTag+'</div><div class="meta"><span>'+ct+'</span><span>'+it.batch+'</span><span>'+it.qty+'</span></div></div><div class="right"><div class="days">'+formatDays(it.days)+'</div><div class="date">'+it.expire+'</div></div></div>';
   });
   card.innerHTML=html;
   card.onclick=function(e){var el=e.target.closest('.reminder');if(!el)return;openSheet(parseInt(el.dataset.idx));};
 }
+
+// ===== 3天内紧急提醒 =====
+function renderAlert(){
+  var bar=document.getElementById('alertBar');
+  var text=document.getElementById('alertText');
+  var urgent=ITEMS.map(function(it,idx){return{name:it.name,days:getDaysLeft(it.expire),qty:it.qty,origIdx:idx};})
+    .filter(function(x){return x.days<=3;})
+    .sort(function(a,b){return a.days-b.days;});
+  if(urgent.length===0){bar.style.display='none';return;}
+  var html='';
+  urgent.forEach(function(it,i){
+    var d=it.days;
+    var dayText=d<0?'已过期 '+Math.abs(d)+' 天':(d===0?'今天到期':'剩 '+d+' 天');
+    html+='<div>'+(i+1)+'. '+it.name+' <b>'+dayText+'</b>（'+it.qty+'）</div>';
+  });
+  text.innerHTML=html;
+  bar.style.display='flex';
+}
+document.getElementById('alertClose').addEventListener('click',function(){
+  document.getElementById('alertBar').style.display='none';
+});
 
 // ===== 详情弹层 =====
 var currentSheetIdx=-1;
@@ -807,7 +863,7 @@ function renderHero(){
 
 
 // ===== 初始化 =====
-renderHero();updateInventoryDate();renderStats();renderList();
+renderHero();updateInventoryDate();renderStats();renderList();renderAlert();
 </script>
 <script>
 if('serviceWorker' in navigator){
