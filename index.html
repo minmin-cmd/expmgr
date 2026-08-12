@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="效期管家">
+<meta name="theme-color" content="#2E7D6B">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIlx1NWZjM1x1NTE4NVx1NGUwMFx1NjU0OFx1NjcxZlx1N2JhMVx1NWJiNiIsICJzaG9ydF9uYW1lIjogIlx1NjU0OFx1NjcxZlx1N2JhMVx1NWJiNiIsICJkZXNjcmlwdGlvbiI6ICJcdTVmYzNcdTUxODVcdTRlMDBcdTc5ZDFcdTYyYTJcdTY1NTFcdThmNjZcdTRlMDBcdTZiMjFcdTYwMjdcdTcyNjlcdTU0YzFcdTUzY2FcdTgzNmZcdTU0YzFcdTY3MDlcdTY1NDhcdTY3MWZcdTdiYTFcdTc0MDYiLCAic3RhcnRfdXJsIjogIi4vaW5kZXguaHRtbCIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAib3JpZW50YXRpb24iOiAicG9ydHJhaXQiLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRjRGN0Y2IiwgInRoZW1lX2NvbG9yIjogIiMyRTdENkIiLCAibGFuZyI6ICJ6aC1DTiIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3BuZztiYXNlNjQsaVZCT1J3MEtHZ29BQUFBTlNVaEVVZ0FBQU1BQUFBREFDQVlBQUFCUzNHd0hBQUFGY1VsRVFWUjRuTzNidTNFVVdRQ0Y0WmFLQUxCeHlJQVVGQXdtR1ZDRnBTb3l3Q1FZVWxBR09OaGt3RnF0bGViWmovdlNuTzh6dHhZeHBUbC8zNW5wNFc0YXpLZHZYLzcxZmd6VTlmVDQ0NjczWTVoMWZTREd6cXhYRk0zL1VxUG5tcFl4TlB1TERKKzFXb1JRL1M4d2ZQYXFHVUsxSDJ6NGxGWWpoT0kvMFBDcHJXUUk5NlYrMERRWlAyMlUzRm1Sa2d5Zlh2YWVCcnRQQU9PbnA3MzcyeFdBOFRPQ1BUdmNISUR4TTVLdGU5d1VnUEV6b2kyN1hCMkE4VE95dGZ0Y0ZZRHg4eGFzMmVuaWo1QkdHdi83ang5NlB3Uk8rUHY3VCsrSDhNcVNqMGdYQmRCei9NYit0dldPNGxvRVZ3UG9OWDdEdnkwOVE3Z1V3YnVXRCtRYW83OWRMNS9iM3FmQ1N4ZFBnRlpYZjhQUDFES0VjNmZBMlUrQmpKL2FXajczNS9iYzdTV1E0VE5OLysrZzE4dWlreWRBN2F1LzhYT294U1pPN2Jyb3Z3ZFl3dmc1cDhjMmpnS29lZlUzZnE2cHZaSERmVGM3QVl5ZnBWcHU1VlVBdGE3K3hzOWFOVGZ6Y3VmVlR3RGpaNnNXMjNrT29NYlYzL2pacTlhRzVyMVhPd0dNbjFKcWJxbEtBTVpQYWJVMmRUZE41Vi8rQ09DNlg1Ky9IdjIzaDUvZk96eVN0NlBHM2VMaUFSai9aYWVHZjBnSTU1V09vR2dBeG4vZWt1RWZFc0pwSlNOby9sV0lSRnZHditmUHNWeXhBRno5YWFYazF1NUgrc2Z1dDJqdlZkd3BVSmVYUUVRckVvQ1hQNmVWdW5vN0JZNlYycHdUZ0dpN0EzRDFwNWNTMjNNQ0VFMEFSQk1BMFFSQXRGMEJlQU5NYjNzMzZBUWdtZ0NJSmdDaUNZQm9BaUNhQUlnbUFLSUpnR2dDSUpvQWlDWUFvZ21BYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHZ0NJSm9BaUNZQW9nbUFhQUlnbWdDSUpnQ2lDWUJvQWlDYUFJZ21BS0lKZ0dnQ0lKb0FpQ1lBb2dtQWFBSWdtZ0NJSmdDaUNZQm9BaURhdTk0UDRKeGZuNy8yZmdoRHVZWGZ4OFBQNzcwZndwSGhBcmlGSjVyVDV1ZDJwQkNHQ2NEd2M0d1V3aER2QVl3LzB3alAreEFCUUMvZEF4amhLa0EvdlovLzdnRkFUMTBENkYwL1kraTVBeWNBMFFSQU5BRVFUUUJFNnhyQUNIY0M2YS9uRHB3QVJPc2VnRk1nVysvbnYzc0EwTk1RQWZTK0N0REhDTS83TUYrSG5uOFo3ZzdmdmhHR1B4c21nSmtRYnRkSXc1OE5GOEJzeEYvV1dpVWp2b1hmeDRpR2VBOEF2UWlBYUFJZ21nQ0lKZ0NpQ1lCb0FpQ2FBSWdtQUtJSmdHZ0NJSm9BaUNZQW9nbUFhQUlnbWdDSUpnQ2lDWUJvQWlDYUFJZ21BS0lKZ0dnQ0lKb0FpQ1lBb2dtQWFBSWdtZ0NJSmdDaUNZQm9BaUNhQUlnbUFLSUpnR2dDSUpvQWlDWUFvZ21BYUFJZ21nQ0l0aXVBdjcvL2xIb2NzTW5lRFRvQmlDWUFvZ21BYUFJZzJ1NEF2QkdtbHhMYmN3SVFyVWdBVGdGYUs3VTVKMEJGRHorL0QvVnpPQ1lBb3QwL1BmNjRLL0dEdkF3NmJlL1YyOVgvV01tdE9RR0lWalFBcDhCcFc2L2lydjdIU20vc2JwcW02ZE8zTC85Sy90RDNIeitVL0hFMzVkZm5yMWYvSDhNL3JjWUY5bDN4bjhoRjg3aFBoV0Q0N1QyL0FYWUtNTElhVi8rbnh4OTMxZDRFZXo5QUtUVzNWUFZUSUJHd1YrME5QUWRRNm43QUlSR3dWYzN0ekh0dmNoOUFCS3pWYWpPdkFxaDFDa3lUQ0ZpdTlsWmU3cnpwbldBUmNFM3JqUndGVVBNVW1DWVJjRjZMYlJ6dXU4dDNnVVRBb1Y2Yk9IdTFMMzFqN0J3M3pMSzFIUDZwVnpmZHZ3M3FOTWcxd25OLzhmVitxMU5nNWpUSTBHUDQ1OTdiWG4zRDJ6cUNtUmh1Uzgrci9hVVBkb2I5TnVqOEN4UEMyemJDeTV4TEZuM2syZXNVT0VjVVl4cHg3TmMrMWwvOG1mOW9FY0ExUys1cExmNFVxUFlOTWlocDZWNVhmUXdxQXQ2Q05UdGRmUjlBQkl4czdUNDMzUWdUQVNQYXNzdk5kNEpGd0VpMjduSFhWeUZFd0FqMjdIRDNkNEZFUUU5NzkxZDB2TzRWMEVxcEMyL1JiNE02RFdpaDVNNnFEZFpwUUdrMUxyRFZyOWhDWUsrYXJ5eWF2V1FSQW11MWVFbmQvRFc3RUxpbTVYdkpybTlheGNDczF3Y28vd0hnZktDeDNEL3Y0QUFBQUFCSlJVNUVya0pnZ2c9PSIsICJzaXplcyI6ICIxOTJ4MTkyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn0sIHsic3JjIjogImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBZ0FBQUFJQUNBWUFBQUQwZU5UNkFBQVJhRWxFUVZSNG5PM2R2WkViUnhlRzBTYUxBY2lXb3d5WUFvT1J5UXhVUlV0VnlrQ21nbEVLeW9DT2JHWEF6MkRoMnlVVy8raWU2ZHZ2T1o2cUpIRXdHUFo5cGdmWWZkZVkwc2N2bjcvdGZRd0F2Znp6KzUvdjlqNEdmdVFOMllrQkQvQkNJR3pQQ2QrQVlROXdQMUV3bHBNN2dJRVAwSjhnNk12SjdNREFCOWllSUhpT2svY2dReDlnSG1MZ2ZrN1lIUXg5Z1BtSmdkczRTVmNZK2dCMWlZSHpuSmd6REg2QWRRaUJ0NXlRVnd4OWdQV0pnZStjaEdid0F5UktENEhvRjIvd0E1QWFBcEV2MnVBSDRGaGFDRVM5V0lNZmdHdFNRaURpUlJyOEFOeHI5UkI0di9jQmpHYjRBL0NJMWVmSHNuV3oraHNId0haVzNBMVk3Z1VaL0FDTXNsSUlMUFVJd1BBSFlLU1Y1c3dTSmJQU0d3SkFEZFYzQThydkFCaitBT3loK3Z3cEhRRFZUejRBdFZXZVF5VzNMeXFmY0FEV1ZPMlJRTGtkQU1NZmdCbFZtMCtsQXFEYXlRVWdTNlU1VldLN290SUpCWURXNW44a01QME9nT0VQUUVXeno2K3BBMkQya3djQWw4dzh4NllOZ0psUEdnRGNhdFo1Tm1VQXpIcXlBT0FSTTg2MTZRSmd4cE1FQU0rYWJiNU5GUUN6blJ3QTZHbW1PVGROQU14MFVnQmdsRm5tM1JRQk1NdkpBSUF0ekREM2RnK0FHVTRDQUd4dDcvbTNhd0RzL2VJQllFOTd6c0hkQXNEd0I0RDk1dUV1QVdENEE4Q0xQZWJpNWdGZytBUEFXMXZQeDAwRHdQQUhnUE8ybkpPYi9hcEN3Mzh1UC8zeTg5NkhBRXppdjYvLzduMElITm5pVndsdkVnQ0cvejRNZWVCWjRtQS9veVBndzhqL09kc3g3SUVSVHEwdG9tQU53M2NBM1AyUFllQURzeEFFNDR6Y0JSZ2FBSVovWDRZK01Ec3gwTitvQ0JnV0FJWi9INFkrVUpVWTZHZEVCUGdNd0lRTWZXQUZyOWN5TVRDZklUc0E3djRmWS9BRHF4TUNqK3U5QzlBOUFBei8reGo2UUNveGNMK2VFZEExQUF6LzJ4bjhBTjhKZ2Z2MGlnQ2ZBZGlZd1Evd284TzZLQVMyMVcwSHdOMy9aUVkvd0cyRXdIVTlkZ0c2QklEaGY1N0JEL0FZSVhEWnN4R3crYThEVG1MNEF6ek9HanJXMHpzQTd2N2ZjdEVDOUdVMzRMUm5kZ0Y4Q0xBamd4OWdEQjhVN08rcFJ3RHUvbDhZL2dEaldXdC85TXdjZmpnQURQOFhMa2lBN1ZoemYvVG9QUFlJNEFrdVFvQjllQ1R3dklkMkFOejlHLzRBTTdBV2YvZklYUFkxd0FlNDRBRG1ZVTErek4xZkgwaSsrM2VSQWN3dC9aSEFQVjhMdEFOd0k4TWZZSDdXNnR2ZEZRQ3BkLzh1S0lBNmt0ZnNlK2EwSFlBcmtpOGtnS3FzM2RmZEhBQ0pkLzh1SUlDNlV0ZndXK2UxSFlBelVpOGNnSlZZeTgrN0tRRFM3djVkTUFEclNGelRiNW5iZGdDT0pGNG9BS3V6dHI4bEFGNXhnUUNzeXhyL282c0JrTEw5NzhJQVdGL1NXbjl0ZnRzQmFGa1hCRUE2YS81M0Z3TWc0ZTdmaFFDUUoyWHR2elRIbzNjQVVpNEFBTjVLbndHeEFaRCt4Z09RUFF2T0JzREsyLy9KYnpnQVAxcDlKcHliNTdFN0FBQ1FMQzRBVmk4OUFPNlhPQnRPQnNDcTIvK0piekFBdDFsNVJweWE2ekU3QUN1L3NRRDBrVFFyWWdJQUFIanhKZ0JXM1A1UEtqb0FuclBxekRpZTd4LzJPcEN0clBwR3dpUCsvdlczcS8vT3A3LysyT0JJWUc0Ly9mSnorKy9ydjNzZnhsQkxCNERoVDdwYkJ2NjEvMFlRa0dyMUNGZzZBQ0RWSTRQLzJ2OUxDTUJhM3IzK2g1V2UvN3Y3SjFIUHdYK09FQ0ROYXJzQS8veis1N3ZXN0FEQUVyWVkvTWQvbGhDQTJwYjhHcUM3ZjVKc09meG4rSE5oYTZ2T2xPVUNZTlUzQ2s3WmV3anYvZWZEVmxhY0xmOFBnSldlLzBPQ1dZYnZMTWNCM09Zdzc1ZmFBVml4ME9DVTJZYnViTWNESTZ3Mlk1WUtBRWd3NjdDZDliaUEwNVlKZ05YS0RFNlpmY2pPZm56d3JKVm16VElCQUt1ck1seXJIQ2VrZTk5YS9ROEFybFJrQU14dGhabno4Y3ZuYjNZQW9JQnFkOVhWamhjU2xRK0FGVW9NZ0ZwV21EM2xBd0JXVi9WdXV1cHhRd29CQUFDQlNnZkFDbHN3Y0VuMXUranF4dytYVko5QnBRTUFBSGhNMlFDb1hsNEExRmQ1RnIydi9qTUFBSUQ3bGQwQmdOV3Q4dng4bGRjQnF5a1pBSlczWEFCWVM5V1pWRElBQUlEbkNBQUFDRlF1QUtwdXRRQ3dyb3F6cVZ3QUFBRFBFd0FBRUtoVUFGVGNZZ0VnUTdVWlZTb0FBSUErQkFBQUJCSUFBQkNvVEFCVWU3WUNRSjVLczZwTUFBQUEvUWdBQUFna0FBQWdrQUFBZ0VBbEFxRFNoeW9BeUZabFpwVUlBQUNnTHdFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdhWVBnQ3BmcHdDQWd3cXphL29BQUFENkV3QUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFJQUVBQUlFRUFBQUVFZ0FBRUVnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFJQUVBQUlFRUFBQUVFZ0FBRUVnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCQkFBQUJCSUFBQkJJQUFCQUlBRUFBSUVFQUFBRUVnQUFFRWdBQUVBZ0FRQUFnUVFBQUFRU0FBQVFTQUFBUUNBQkFBQ0JCQUFBQkJJQUFCQklBQUJBSUFFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCQUFDQkJBQUFCQklBQUJCSUFBQkFJQUVBQUlFRUFBQUVFZ0FBRUVnQUFFQWdBUUFBZ1FRQUFBUVNBQUFRU0FBQVFDQUJBQUNCUHV4OUFKejM5NisvN1gwSTBJVnJPZHVudi83WSt4QTRRUUJNeENJSnJPaDRiUk1FY3hBQUV6RDRnU1NITlU4STdFc0E3TWpnQjVJSmdYMEpnQjBZL0FBdmhNQStmQXRnWTRZL3dHbld4MjBKZ0EyNXVBRXVzMDV1UndCc3hFVU5jQnZyNVRZRXdBWmN6QUQzc1c2T0p3QUdjeEVEUE1iNk9aWUFHTWpGQy9BYzYrZzRBbUFRRnkxQUg5YlRNUVFBQUFRU0FBT29WWUMrckt2OUNRQUFDQ1FBT2xPcEFHTllYL3NTQUFBUVNBQjBwRTRCeHJMTzlpTUFBQ0NRQUFDQVFBSUFBQUlKZ0U0OGx3TFlodlcyRHdFQUFJRUVBQUFFRWdBQUVFZ0FBRUFnQVFBQWdRUUFBQVFTQUFBUVNBQUFRQ0FCME1tbnYvN1kreEFBSWxodit4QUFBQkJJQUFCQUlBRUFBSUVFUUVlZVN3R01aWjN0UndBQVFDQUIwSms2QlJqRCt0cVhBQUNBUUFKZ0FKVUswSmQxdFQ4QkFBQ0JCTUFnYWhXZ0QrdnBHQUpnSUJjdHdIT3NvK01JZ01GY3ZBQ1BzWDZPSlFBMjRDSUd1STkxY3p3QnNCRVhNOEJ0ckpmYkVBQWJjbEVEWEdhZDNJNEEySmlMRytBMDYrTzJQdXg5QUlrT0YvbmZ2LzYyODVFQTdNL2czNGNBMkpFUUFKSVovUHNTQUJNUUFrQVNnMzhPQW1BaXgzOHBCQUd3QWdOL1RnSmdZdjdTWkZzcEFGM0xNQi9mQWdDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZ2tBQUFna0FBQWdFQUNBQUFDQ1FBQUNDUUFBQ0NRQUFDQVFBSUFBQUlKQUFBSUpBQUFJSkFBQUlCQUFnQUFBZ2tBQUFna0FBQWdrQUFBZ0VBQ0FBQUNDUUFBQ0NRQUFDQ1FBQUNBUUFJQUFBSUpBQUFJSkFBQUlKQUFBSUJBQWdBQUFna0FBQWdrQUFBZ2tBQUFnRUFDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFJSkFBQUlKQUFBSUpBQUFJQkFBZ0FBQWdrQUFBZzBmUUQ4OS9YZnZROEJBTzVTWVhaTkh3QUFRSDhDQUFBQ0NRQUFDQ1FBQUNDUUFBQ0FRQUlBQUFLVkNJQUtYNmNBZ05icXpLd1NBUUFBOUNVQUFDQ1FBQUNBUUFJQUFBS1ZDWUFxSDZvQUlGZWxXVlVtQUFDQWZnUUFBQVFTQUFBUXFGUUFWSHEyQWtDV2FqT3FWQUFBQUgwSUFBQUlWQzRBcW0yeEFMQytpck9wWEFBQUFNOFRBQUFRcUdRQVZOeHFBV0JOVldkU3lRQUFBSjRqQUdCU24vNzZZKzlENkdLVjF3R3JlZi9QNzMrKzIvc2dIbEYxeXdXQWRWU2VSWFlBQUNCUTZRQ29YRjRBMUZaOUJwVU9BRmhkOWVmbjFZOGZWaVlBQUNCUStRQ292Z1VEMTFTOWk2NTYzSENMRldaUCtRQUFBTzYzUkFDc1VHSndTYlc3NldySEMvZFlaZWE4YjYyMXFqOExBQUM0M3orLy8vbHVpUjJBMXRZcE1qaW55bDExbGVPRVI2dzBhNVlKQUVndyszQ2QvZmlBRjBzRndFcGxCdWZNT21SblBTN29aYlVaczFRQVFJclpodTFzeHdOYzkvOEFXT1dEZ0tzVkdwd3p5OUNkNVRoZ3BKVm15MkhlTDdrRHNOSWJCWmZzUFh6My92TmhDNnZPbENVREFKTHNOWVFOZjZqdHc5NEhNTXAvWC85dFAvM3k4OTZIQVpzNERPTy9mLzF0c3o4TEVxeDY5OTlhYTIrZSszLzg4dm5iSGdjeWdnQWcxWWdRTVBoSnRGb0F2UDY4MzdJN0FLM1pCU0JYengwQmc1OVVxdzMvWTBzSFFHc2lnR3pIdy91V0lERHdZZjNoMzFwQUFMUW1BdURBY0lmckVvWi9heWUrQmJES3p3TUFBRjRjei9lWXJ3R21GQjBBajB1YUZURUIwRnJXR3d2QWZkSm14TWtBV1BreFFOb2JETUIxcTgrR1UzTTlhZ2NBQVBndU1nQldMejBBYnBjNkU4NEd3TXFQQVZyTGZjTUJlSkV3Qzg3Tjg4Z2RnSU9FTng2QTA5Sm5RSFFBdE9ZQ0FFaGs3YjhTQUtzL0JqaHdJUURrU0Zyekw4M3grQjJBZzZRTEFpQ1Z0ZjdGMVFCSTJRVm96WVVCc0xLME5mN2EvTFlEY0NUdEFnRklZRzEvU3dDYzRFSUJXSWMxL2JTYkFpRHBNY0NCQ3dhZ3Z0UzEvSmE1YlFmZ2d0UUxCMkFGMXZETGJnNkF4RjJBMWx4QUFCVWxyOTIzem1zN0FEZEl2cEFBcXJGbTMrYXVBRWpkQldqTkJRVlFRZnBhZmMrYy9qRHlRRlp6dUxCKyt1WG5uWThFZ05mU0IvOGo3bjRFa0x3TGNPQkNBNWlITmZtN2UrZXp6d0E4eUFVSHNEOXI4ZU1ldnB2LytPWHp0NTRIVXBsSEFnRGJNdmgvOU1qdXZCMkFEbHlJQU51eDV2YnhjQUQ0TE1DUFhKQUE0MWxyMzNwMEhqODl4RDBLZU1zakFZQytEUDdUbnJrWjl6WEFBWHhkRUtBUGczK2NwejhENEZIQWVTNWNnTWRaUXk5N2R2N2FBUmpNYmdEQWZReitiWFM3ZS9kWmdOc0lBWURURFA3YjlkaDk3N3A5THdKdUp3UUF2alA0NzlQcjBidEhBRHZ4YUFCSVovRHZxL3NIK093Q1BFNE1BS3N6OUovVDg0UDNRejdCTHdLZUl3U0ExUmo4eit2OXJidGhYK0VUQVgySUFhQXFRNytmRVYrNTl4bUF5YjMrQ3lRR2dOa1orblVNL1NFK2RnSEdFUVBBTEF6OXNVYjl3TDNoUDhWUEJHeERFQUJiTWZDM00vS243Vzd5WTN4RndENUVBZkFzdzM0L28zL1V2czhBTE96U1gxeHhBQndZOHBrMiswVStkZ0VBNERaYi9LSzlwMzhiNEszODFrQUF1RzZyZWJsWkFMUW1BZ0Rna2kzbjVLWUIwSm9JQUlCVHRwNlBtd2RBYXlJQUFGN2JZeTd1RWdDdGlRQUFhRzIvZWJoYkFMUW1BZ0RJdHVjYzNEVUFXaE1CQUdUYWUvN3RIZ0N0N1g4U0FHQkxNOHk5S1FLZ3RUbE9CZ0NNTnN1OG15WUFXcHZucEFEQUNEUE51YWtDb0xXNVRnNEE5RExiZkpzdUFGcWI3eVFCd0RObW5HdFRCa0JyYzU0c0FMalhyUE5zMmdCb2JkNlRCZ0MzbUhtT1RSMEFyYzE5OGdEZ25Obm4xOVFIZCt6amw4L2Y5ajRHQUxoazlzRi9NUDBPd0d0VlRpb0FtU3JOcVZJQjBGcXRrd3RBam1yenFkVEJIdk5JQUlDOVZSdjhCK1YyQUY2cmV0SUJXRVBsT1ZRNkFGcXJmZklCcUt2Ni9DbDk4TWM4RWdCZ3RPcUQvNkQ4RHNCcnE3d3BBTXhwcFRtenpBczVaamNBZ0Y1V0d2d0h5NzJnWTBJQWdFZXRPUGdQbG5vRWNNcktieDRBNDZ3K1A1WitjY2ZzQmdCd3plcUQveURpUlI0VEFnQWNTeG44QjFFdjlwZ1FBQ0J0OEI5RXZ1aGpRZ0FnVCtyZ1A0aCs4Y2VFQU1ENjBnZi9nWk53aGhnQVdJZWgvNVlUY29VUUFLakw0RC9QaWJtREdBQ1luNkYvR3lmcFFXSUFZQjZHL3YyY3NBN0VBTUQyRFAzbk9Ia0RDQUtBL2d6OHZwek1EUWdDZ1BzWitHTTV1VHNSQlFBdkRQdnQvUStrbDFjbmp2SFEwUUFBQUFCSlJVNUVya0pnZ2c9PSIsICJzaXplcyI6ICI1MTJ4NTEyIiwgInR5cGUiOiAiaW1hZ2UvcG5nIiwgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIn1dfQ==">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAFcUlEQVR4nO3bu3EUWQCF4ZaKALBxyIAUFAwmGVCFpSoywCQYUlAGONhkwFqtlebZj/vSnO8ztxYxpTl/35np4W4azKdvX/71fgzU9fT44673Y5h1fSDGzqxXFM3/UqPnmpYxNPuLDJ+1WoRQ/S8wfPaqGUK1H2z4lFYjhOI/0PCprWQI96V+0DQZP22U3FmRkgyfXvaeBrtPAOOnp7372xWA8TOCPTvcHIDxM5Kte9wUgPEzoi27XB2A8TOytftcFYDx8xas2enij5BGGv/7jx96PwRO+Pv7T++H8MqSj0gXBdBz/Mb+tvWO4loEVwPoNX7Dvy09Q7gUwbuWD+Qao79dL5/b3qfCSxdPgFZXf8PP1DKEc6fA2U+BjJ/aWj735/bc7SWQ4TNN/++g18uikydA7au/8XOoxSZO7brovwdYwvg5p8c2jgKoefU3fq6pvZHDfTc7AYyfpVpu5VUAta7+xs9aNTfzcufVTwDjZ6sW23kOoMbV3/jZq9aG5r1XOwGMn1JqbqlKAMZPabU2dTdN5V/+COC6X5+/Hv23h5/fOzySt6PG3eLiARj/ZaeGf0gI55WOoGgAxn/ekuEfEsJpJSNo/lWIRFvGv+fPsVyxAFz9aaXk1u5H+sfut2jvVdwpUJeXQEQrEoCXP6eVuno7BY6V2pwTgGi7A3D1p5cS23MCEE0ARBMA0QRAtF0BeANMb3s36AQgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiDau94P4Jxfn7/2fghDuYXfx8PP770fwpHhAriFJ5rT5ud2pBCGCcDwc4wUwhDvAYw/0wjP+xABQC/dAxjhKkA/vZ//7gFAT10D6F0/Y+i5AycA0QRANAEQTQBE6xrACHcC6a/nDpwAROsegFMgW+/nv3sA0NMQAfS+CtDHCM/7MF+Hnn8Z7g7fvhGGPxsmgJkQbtdIw58NF8BsxF/WWiUjvoXfx4iGeA8AvQiAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCIJgCiCYBoAiCaAIgmAKIJgGgCIJoAiCYAogmAaAIgmgCItiuAv7//lHocsMneDToBiCYAogmAaAIg2u4AvBGmlxLbcwIQrUgATgFaK7U5J0BFDz+/D/VzOCYAot0/Pf64K/GDvAw6be/V29X/WMmtOQGIVjQAp8BpW6/irv7HSm/sbpqm6dO3L/9K/tD3Hz+U/HE35dfnr1f/H8M/rcYF9l3xn8hF87hPhWD47T2/AXYKMLIaV/+nxx931d4Eez9AKTW3VPVTIBGwV+0NPQdQ6n7AIRGwVc3tzHtvch9ABKzVajOvAqh1CkyTCFiu9lZe7rzpnWARcE3rjRwFUPMUmCYRcF6LbRzuu8t3gUTAoV6bOHu1L31j7Bw3zLK1HP6pVzfdvw3qNMg1wnN/8fV+q1Ng5jTI0GP4597bXn3D2zqCmRhuS8+r/aUPdob9Nuj8CxPC2zbCy5xLFn3k2esUOEcUYxpx7Nc+1l/8mf9oEcA1S+5pLf4UqPYNMihp6V5XfQwqAt6CNTtdfR9ABIxs7T433QgTASPassvNd4JFwEi27nHXVyFEwAj27HD3d4FEQE9791d0vO4V0EqpC2/Rb4M6DWih5M6qDdZpQGk1LrDVr9hCYK+aryyavWQRAmu1eEnd/DW7ELim5XvJrm9axcCs1wco/wHgfKCx3D/v4AAAAABJRU5ErkJggg==">
+<title>心内一效期管家</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+:root{
+  --primary:#2E7D6B;--primary-light:#E8F4F0;--bg:#F4F7F6;--card:#FFFFFF;
+  --text:#22302C;--text-sub:#7A8B86;--line:#E7EEEC;
+  --danger:#C62828;--urgent:#D9534F;--warn:#E6A23C;--ok:#4CAF6E;
+  --radius:14px;
+}
+html,body{height:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.5;
+  max-width:520px;margin:0 auto;padding-bottom:74px;
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;border:none;background:none;cursor:pointer;color:inherit;}
+input,select,textarea{font-family:inherit;font-size:14px;}
+
+/* 顶部信息卡片 */
+.hero{
+  background:linear-gradient(135deg,#2E7D6B 0%,#3E9C85 100%);
+  color:#fff;padding:calc(20px + env(safe-area-inset-top)) 20px 26px;
+  border-radius:0 0 22px 22px;box-shadow:0 6px 18px rgba(46,125,107,.18);
+}
+.hero .eyebrow{font-size:12px;letter-spacing:.5px;opacity:.85;display:flex;align-items:center;gap:6px;}
+.hero .eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:#B8E6D8;display:inline-block;}
+.hero h1{font-size:19px;font-weight:600;margin-top:8px;line-height:1.35;}
+.hero .sub{font-size:13px;opacity:.9;margin-top:6px;display:flex;align-items:center;gap:14px;}
+.hero .sub .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.5);}
+.hero .inventory{
+  margin-top:16px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+  border-radius:10px;padding:9px 13px;font-size:13px;display:flex;justify-content:space-between;align-items:center;
+}
+.hero .inventory .tag{background:#fff;color:var(--primary);font-weight:600;font-size:11px;padding:2px 8px;border-radius:20px;}
+
+/* 统计模块 */
+.stats{display:flex;gap:10px;margin:-14px 16px 0;position:relative;z-index:2;}
+.stat{
+  flex:1;background:var(--card);border-radius:var(--radius);padding:14px 6px 12px;
+  text-align:center;box-shadow:0 3px 10px rgba(34,48,44,.06);border:2px solid transparent;
+  transition:all .15s;cursor:pointer;
+}
+.stat:active{transform:scale(.94);}
+.stat.selected{border-color:var(--primary);background:var(--primary-light);}
+.stat .num{font-size:24px;font-weight:700;line-height:1.1;}
+.stat .label{font-size:12px;color:var(--text-sub);margin-top:4px;}
+.stat.lv-severe .num{color:var(--danger);}
+.stat.lv-urgent .num{color:var(--urgent);}
+.stat.lv-warn .num{color:var(--warn);}
+.stat.lv-ok .num{color:var(--ok);}
+.stat .dotbar{height:4px;border-radius:2px;background:var(--bg);margin-top:8px;overflow:hidden;}
+.stat .dotbar i{display:block;height:100%;border-radius:2px;transition:width .4s;}
+.stat.lv-severe .dotbar i{background:var(--danger);}
+.stat.lv-urgent .dotbar i{background:var(--urgent);}
+.stat.lv-warn .dotbar i{background:var(--warn);}
+.stat.lv-ok .dotbar i{background:var(--ok);}
+
+/* 快捷操作宫格 */
+.quick-actions{margin:18px 16px 0;background:var(--card);border-radius:var(--radius);border:1px solid var(--line);box-shadow:0 2px 8px rgba(34,48,44,.04);overflow:hidden;}
+.quick-actions .qa-header{font-size:13px;font-weight:600;color:var(--text);padding:12px 14px 8px;display:flex;align-items:center;gap:6px;}
+.quick-actions .qa-header::before{content:"⚡";font-size:14px;}
+.qa-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);}
+.qa-item{
+  background:var(--card);padding:14px 4px 12px;text-align:center;cursor:pointer;
+  transition:background .15s;display:flex;flex-direction:column;align-items:center;gap:5px;
+}
+.qa-item:active{background:var(--primary-light);}
+.qa-item .qa-icon{
+  width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.qa-item .qa-label{font-size:11px;color:var(--text);line-height:1.2;}
+.qa-icon.c1{background:#E8F4F0;color:var(--primary);}
+.qa-icon.c2{background:#FFF3E0;color:#E68A00;}
+.qa-icon.c3{background:#E3F2FD;color:#1976D2;}
+.qa-icon.c4{background:#FCE4EC;color:#C62828;}
+.qa-icon.c5{background:#F3E5F5;color:#7B1FA2;}
+.qa-icon.c6{background:#E0F2F1;color:#00695C;}
+.qa-icon.c7{background:#FFF8E1;color:#F57C00;}
+.qa-icon.c8{background:#ECEFF1;color:#455A64;}
+
+/* 区块 */
+.section{margin:22px 16px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.section-head h2{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.section-head h2 .badge{font-size:11px;font-weight:500;color:var(--text-sub);background:var(--bg);padding:1px 8px;border-radius:20px;}
+.section-head .more{font-size:12px;color:var(--primary);font-weight:500;cursor:pointer;}
+.card{background:var(--card);border-radius:var(--radius);border:1px solid var(--line);box-shadow:0 2px 8px rgba(34,48,44,.04);overflow:hidden;}
+
+/* 提醒列表 */
+.reminder{display:flex;align-items:center;gap:12px;padding:13px 14px;border-bottom:1px solid var(--line);transition:background .15s;cursor:pointer;}
+.reminder:last-child{border-bottom:none;}
+.reminder:active{background:var(--primary-light);}
+.reminder .mark{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.reminder .info{flex:1;min-width:0;}
+.reminder .name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.reminder .meta{font-size:12px;color:var(--text-sub);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap;}
+.reminder .right{text-align:right;flex-shrink:0;}
+.reminder .days{font-size:13px;font-weight:600;}
+.reminder .date{font-size:11px;color:var(--text-sub);margin-top:1px;}
+
+.lv-severe .mark,.lv-severe .days{color:var(--danger);}
+.lv-urgent .mark,.lv-urgent .days{color:var(--urgent);}
+.lv-warn .mark,.lv-warn .days{color:var(--warn);}
+.lv-ok .mark,.lv-ok .days{color:var(--ok);}
+.lv-severe .mark{background:var(--danger);box-shadow:0 0 0 3px rgba(198,40,40,.12);}
+.lv-urgent .mark{background:var(--urgent);box-shadow:0 0 0 3px rgba(217,83,79,.12);}
+.lv-warn .mark{background:var(--warn);box-shadow:0 0 0 3px rgba(230,162,60,.15);}
+.lv-ok .mark{background:var(--ok);box-shadow:0 0 0 3px rgba(76,175,110,.12);}
+
+.empty{padding:26px 16px;text-align:center;color:var(--text-sub);font-size:13px;}
+.empty .icon{font-size:30px;margin-bottom:6px;opacity:.5;}
+
+/* 筛选标签 */
+.filter-bar{display:flex;gap:8px;margin:16px 16px 0;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
+.filter-bar::-webkit-scrollbar{display:none;}
+.chip{
+  flex-shrink:0;font-size:12px;padding:7px 16px;border-radius:20px;
+  background:var(--card);border:1px solid var(--line);color:var(--text-sub);white-space:nowrap;
+  transition:all .15s;cursor:pointer;
+}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600;}
+.chip:active{transform:scale(.92);}
+
+/* 筛选状态提示 */
+.filter-info{margin:10px 16px 0;font-size:12px;color:var(--text-sub);display:flex;align-items:center;gap:8px;}
+.filter-info .clear-btn{color:var(--primary);font-weight:500;cursor:pointer;background:var(--primary-light);padding:2px 10px;border-radius:12px;font-size:11px;}
+
+/* 弹层通用 */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:50;opacity:0;pointer-events:none;transition:opacity .25s;}
+.overlay.show{opacity:1;pointer-events:auto;}
+.sheet{
+  position:fixed;left:50%;bottom:0;transform:translateX(-50%) translateY(100%);
+  width:100%;max-width:520px;background:var(--card);border-radius:20px 20px 0 0;
+  padding:20px 18px calc(20px + env(safe-area-inset-bottom));z-index:51;
+  transition:transform .3s cubic-bezier(.22,.96,.36,1);max-height:85vh;overflow-y:auto;
+}
+.sheet.show{transform:translateX(-50%) translateY(0);}
+.sheet .grip{width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 16px;}
+.sheet h3{font-size:16px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.sheet .row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;}
+.sheet .row:last-child{border-bottom:none;}
+.sheet .row .k{color:var(--text-sub);}
+.sheet .row .v{font-weight:500;text-align:right;}
+.sheet .lv-tag{display:inline-block;font-size:12px;font-weight:600;padding:3px 12px;border-radius:20px;margin-top:8px;}
+.sheet .actions{display:flex;gap:10px;margin-top:18px;}
+.sheet .actions button{flex:1;padding:11px;border-radius:10px;font-size:14px;font-weight:600;}
+.sheet .btn-ok{background:var(--primary-light);color:var(--primary);}
+.sheet .btn-primary{background:var(--primary);color:#fff;}
+.sheet .btn-danger{background:rgba(198,40,40,.1);color:var(--danger);}
+
+/* 表单 */
+.form-group{margin-bottom:14px;}
+.form-group label{display:block;font-size:12px;color:var(--text-sub);margin-bottom:5px;font-weight:500;}
+.form-group input,.form-group select,.form-group textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+  font-size:14px;background:var(--bg);color:var(--text);outline:none;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);background:#fff;}
+.form-row{display:flex;gap:10px;}
+.form-row .form-group{flex:1;}
+
+/* 操作记录列表 */
+.log-list{max-height:300px;overflow-y:auto;}
+.log-item{padding:10px 0;border-bottom:1px solid var(--line);font-size:13px;}
+.log-item:last-child{border-bottom:none;}
+.log-item .log-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.log-item .log-type{font-weight:600;font-size:12px;padding:2px 8px;border-radius:10px;}
+.log-item .log-time{font-size:11px;color:var(--text-sub);}
+.log-item .log-detail{color:var(--text-sub);font-size:12px;}
+
+/* 设置列表 */
+.setting-item{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
+.setting-item:last-child{border-bottom:none;}
+.setting-item .s-label{font-size:14px;}
+.setting-item .s-desc{font-size:11px;color:var(--text-sub);margin-top:2px;}
+.setting-item .s-val{font-size:13px;color:var(--primary);font-weight:500;}
+
+/* 底部导航 */
+.nav{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;
+  width:100%;max-width:520px;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);
+  border-top:1px solid var(--line);display:flex;
+  padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:10;
+}
+.nav a{flex:1;text-align:center;font-size:11px;color:var(--text-sub);text-decoration:none;padding:3px 0;transition:color .15s;cursor:pointer;}
+.nav a.active{color:var(--primary);font-weight:600;}
+.nav a svg{width:22px;height:22px;display:block;margin:0 auto 2px;}
+.nav a svg path,.nav a svg rect,.nav a svg circle{transition:fill .15s;}
+.nav a.active svg path,.nav a.active svg rect,.nav a.active svg circle{fill:var(--primary);}
+
+/* Toast */
+.toast{
+  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);
+  background:rgba(34,48,44,.92);color:#fff;padding:12px 22px;border-radius:12px;
+  font-size:13px;z-index:100;opacity:0;pointer-events:none;transition:all .25s;
+}
+.toast.show{opacity:1;transform:translate(-50%,-50%) scale(1);}
+</style>
+</head>
+<body>
+
+<!-- 顶部信息卡片 -->
+<header class="hero">
+  <div class="eyebrow" id="heroEyebrow">科室药品及一次性用物管理</div>
+  <h1 id="heroTitle">心内一科<br>一次性物品及药品有效期管理</h1>
+  <div class="sub">
+    <span>抢救车效期</span><span class="dot"></span><span>近效期预警</span>
+  </div>
+  <div class="inventory">
+    <span>📋 最近盘点</span>
+    <span class="tag" id="inventoryDate">2026-07-03</span>
+  </div>
+</header>
+
+<!-- 横向4个统计模块 -->
+<section class="stats">
+  <div class="stat lv-severe" data-filter="severe">
+    <div class="num" id="cnt-severe">0</div><div class="label">严重</div><div class="dotbar"><i style="width:0%"></i></div>
+  </div>
+  <div class="stat lv-urgent" data-filter="urgent">
+    <div class="num" id="cnt-urgent">0</div><div class="label">紧急</div><div class="dotbar"><i style="width:0%"></i></div>
+  </div>
+  <div class="stat lv-warn" data-filter="warn">
+    <div class="num" id="cnt-warn">0</div><div class="label">预警</div><div class="dotbar"><i style="width:0%"></i></div>
+  </div>
+  <div class="stat lv-ok" data-filter="ok">
+    <div class="num" id="cnt-ok">0</div><div class="label">物品</div><div class="dotbar"><i style="width:100%"></i></div>
+  </div>
+</section>
+
+<!-- 快捷操作 -->
+<div class="quick-actions">
+  <div class="qa-header">快捷操作</div>
+  <div class="qa-grid">
+    <div class="qa-item" data-action="inbound"><div class="qa-icon c1">📥</div><div class="qa-label">入库登记</div></div>
+    <div class="qa-item" data-action="outbound"><div class="qa-icon c2">📤</div><div class="qa-label">出库登记</div></div>
+    <div class="qa-item" data-action="inventory"><div class="qa-icon c3">🔒</div><div class="qa-label">盘点封存</div></div>
+    <div class="qa-item" data-action="checkdate"><div class="qa-icon c4">🔍</div><div class="qa-label">检查日期</div></div>
+    <div class="qa-item" data-action="restock"><div class="qa-icon c5">📦</div><div class="qa-label">批量补货</div></div>
+    <div class="qa-item" data-action="log"><div class="qa-icon c6">📝</div><div class="qa-label">操作记录</div></div>
+    <div class="qa-item" data-action="settings"><div class="qa-icon c7">⚙️</div><div class="qa-label">系统设置</div></div>
+    <div class="qa-item" data-action="export"><div class="qa-icon c8">💾</div><div class="qa-label">导出数据</div></div>
+    <div class="qa-item" data-action="clearall"><div class="qa-icon c4">🗑️</div><div class="qa-label">一键出库</div></div>
+  </div>
+</div>
+
+<!-- 筛选标签 -->
+<div class="filter-bar" id="filterBar">
+  <button class="chip active" data-filter="all">全部</button>
+  <button class="chip" data-filter="severe">严重</button>
+  <button class="chip" data-filter="urgent">紧急</button>
+  <button class="chip" data-filter="warn">预警</button>
+  <button class="chip" data-filter="ok">正常</button>
+  <button class="chip" data-filter="药品">急救药品</button>
+  <button class="chip" data-filter="物品">一次性用物</button>
+</div>
+
+<!-- 筛选状态提示 -->
+<div class="filter-info" id="filterInfo" style="display:none;">
+  <span id="filterInfoText">—</span>
+  <span class="clear-btn" id="clearFilter">清除筛选 ✕</span>
+</div>
+
+<!-- 物品列表 -->
+<section class="section">
+  <div class="section-head">
+    <h2 id="listTitle">效期预警 <span class="badge">0 项</span></h2>
+    <span class="more" id="sortBtn">按效期排序 ›</span>
+  </div>
+  <div class="card" id="listCard">
+    <div class="empty"><div class="icon">⟳</div>加载中…</div>
+  </div>
+</section>
+
+<!-- 详情弹层 -->
+<div class="overlay" id="overlay"></div>
+<div class="sheet" id="sheet">
+  <div class="grip"></div>
+  <h3 id="sh-name">—</h3>
+  <div class="sheet-meta" id="sh-meta" style="font-size:12px;color:var(--text-sub);margin-bottom:12px;">—</div>
+  <span class="lv-tag" id="sh-tag">—</span>
+  <div style="margin-top:16px;">
+    <div class="row"><span class="k">批号</span><span class="v" id="sh-batch">—</span></div>
+    <div class="row"><span class="k">数量</span><span class="v" id="sh-qty">—</span></div>
+    <div class="row"><span class="k">有效期至</span><span class="v" id="sh-expire">—</span></div>
+    <div class="row"><span class="k">剩余天数</span><span class="v" id="sh-days">—</span></div>
+    <div class="row"><span class="k">存放位置</span><span class="v" id="sh-loc">—</span></div>
+  </div>
+  <div class="actions">
+    <button class="btn-danger" id="sh-outbound">出库</button>
+    <button class="btn-primary" id="sh-edit">编辑</button>
+    <button class="btn-ok" id="sh-close">关闭</button>
+  </div>
+</div>
+
+<!-- 通用操作弹层 -->
+<div class="overlay" id="overlay2"></div>
+<div class="sheet" id="sheet2">
+  <div class="grip"></div>
+  <h3 id="sheet2Title">操作</h3>
+  <div id="sheet2Body"></div>
+  <div class="actions" id="sheet2Actions">
+    <button class="btn-ok" id="sheet2Cancel">取消</button>
+    <button class="btn-primary" id="sheet2Confirm">确认</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">已更新</div>
+
+<!-- 底部导航 -->
+<nav class="nav" id="nav">
+  <a href="javascript:void(0)" class="active" data-page="overview"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#7A8B86"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#7A8B86"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#7A8B86"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#7A8B86"/></svg>总览</a>
+  <a href="javascript:void(0)" data-page="drug"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3" fill="#7A8B86"/><rect x="4" y="11" width="16" height="2" fill="#fff"/></svg>药品</a>
+  <a href="javascript:void(0)" data-page="supply"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z" fill="#7A8B86"/><rect x="9" y="4" width="6" height="4" rx="1" fill="#7A8B86"/></svg>物品</a>
+  <a href="javascript:void(0)" data-page="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#7A8B86"/><circle cx="12" cy="12" r="3.5" fill="#fff"/></svg>设置</a>
+</nav>
+
+<script>
+// ===== 数据层 =====
+var STORAGE_KEY = 'expmgr_items_v3';
+var LOG_KEY = 'expmgr_logs_v1';
+var SETTINGS_KEY = 'expmgr_settings_v1';
+
+var DEFAULT_ITEMS = [
+  {name:'盐酸肾上腺素注射液',cat:'药品',batch:'202406A',qty:'2 支',expire:'2026-08-14',loc:'抢救车第1层'},
+  {name:'阿托品注射液',cat:'药品',batch:'202501B',qty:'2 支',expire:'2026-09-08',loc:'抢救车第1层'},
+  {name:'利多卡因注射液',cat:'药品',batch:'202503C',qty:'3 支',expire:'2026-11-20',loc:'抢救车第1层'},
+  {name:'0.9%氯化钠注射液 250ml',cat:'药品',batch:'202506A',qty:'6 瓶',expire:'2027-01-15',loc:'抢救车第2层'},
+  {name:'5%葡萄糖注射液 250ml',cat:'药品',batch:'202505B',qty:'4 瓶',expire:'2027-02-10',loc:'抢救车第2层'},
+  {name:'地塞米松注射液',cat:'药品',batch:'202502A',qty:'2 支',expire:'2026-10-05',loc:'抢救车第1层'},
+  {name:'硝酸甘油片',cat:'药品',batch:'202504C',qty:'1 瓶',expire:'2026-12-30',loc:'抢救车第1层'},
+  {name:'一次性无菌注射器 5ml',cat:'物品',batch:'202507A',qty:'30 支',expire:'2027-03-20',loc:'抢救车第3层'},
+  {name:'一次性无菌注射器 10ml',cat:'物品',batch:'202507B',qty:'20 支',expire:'2027-03-20',loc:'抢救车第3层'},
+  {name:'一次性无菌注射器 20ml',cat:'物品',batch:'202506C',qty:'10 支',expire:'2027-01-08',loc:'抢救车第3层'},
+  {name:'无菌纱布敷料',cat:'物品',batch:'202505A',qty:'20 包',expire:'2026-12-08',loc:'抢救车第3层'},
+  {name:'无菌棉签',cat:'物品',batch:'202508B',qty:'50 包',expire:'2027-05-15',loc:'抢救车第3层'},
+  {name:'医用胶布',cat:'物品',batch:'202503C',qty:'5 卷',expire:'2026-11-02',loc:'抢救车第4层'},
+  {name:'一次性输液器',cat:'物品',batch:'202506A',qty:'10 套',expire:'2027-04-10',loc:'抢救车第4层'},
+  {name:'一次性输血器',cat:'物品',batch:'202505B',qty:'5 套',expire:'2027-03-05',loc:'抢救车第4层'},
+  {name:'静脉留置针',cat:'物品',batch:'202507C',qty:'10 个',expire:'2027-02-28',loc:'抢救车第4层'},
+  {name:'三通阀',cat:'物品',batch:'202504A',qty:'8 个',expire:'2026-10-18',loc:'抢救车第4层'},
+  {name:'吸氧管',cat:'物品',batch:'202506B',qty:'15 根',expire:'2027-01-22',loc:'抢救车第4层'},
+  {name:'面罩吸氧装置',cat:'物品',batch:'202505C',qty:'5 套',expire:'2026-12-15',loc:'抢救车第4层'},
+  {name:'简易呼吸器',cat:'物品',batch:'202503A',qty:'1 套',expire:'2026-09-30',loc:'抢救车第5层'},
+  {name:'口咽通气道',cat:'物品',batch:'202504B',qty:'3 个',expire:'2027-06-10',loc:'抢救车第5层'},
+  {name:'气管插管',cat:'物品',batch:'202502C',qty:'2 套',expire:'2026-08-25',loc:'抢救车第5层'},
+  {name:'一次性手套',cat:'物品',batch:'202508A',qty:'100 副',expire:'2027-08-01',loc:'抢救车第5层'},
+  {name:'碘伏消毒液',cat:'物品',batch:'202506B',qty:'2 瓶',expire:'2027-02-20',loc:'抢救车第5层'},
+  {name:'75%酒精',cat:'物品',batch:'202507C',qty:'2 瓶',expire:'2027-03-10',loc:'抢救车第5层'},
+  {name:'安尔碘',cat:'物品',batch:'202505A',qty:'1 瓶',expire:'2026-11-28',loc:'抢救车第5层'},
+  {name:'砂轮',cat:'物品',batch:'202506C',qty:'5 个',expire:'2027-05-08',loc:'抢救车第5层'},
+  {name:'止血带',cat:'物品',batch:'202504B',qty:'3 根',expire:'2027-04-30',loc:'抢救车第5层'},
+  {name:'急救记录单',cat:'物品',batch:'202508A',qty:'20 张',expire:'2028-01-01',loc:'抢救车第5层'},
+  {name:'手电筒电池',cat:'物品',batch:'202507B',qty:'4 节',expire:'2028-06-15',loc:'抢救车第5层'}
+];
+
+var DEFAULT_SETTINGS = {dept:'心内一科',warningDays:90,urgentDays:30,severeDays:7,lastInventory:'2026-07-03'};
+
+function loadItems(){
+  try{var s=localStorage.getItem(STORAGE_KEY);if(s){var p=JSON.parse(s);if(Array.isArray(p)&&p.length>0)return p;}}catch(e){}
+  return DEFAULT_ITEMS.slice();
+}
+function saveItems(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(ITEMS));}catch(e){}}
+function loadLogs(){try{var s=localStorage.getItem(LOG_KEY);if(s)return JSON.parse(s);}catch(e){}return [];}
+function saveLogs(){try{localStorage.setItem(LOG_KEY,JSON.stringify(LOGS));}catch(e){}}
+function loadSettings(){try{var s=localStorage.getItem(SETTINGS_KEY);if(s)return Object.assign({},DEFAULT_SETTINGS,JSON.parse(s));}catch(e){}return Object.assign({},DEFAULT_SETTINGS);}
+function saveSettings(){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(SETTINGS));}catch(e){}}
+
+var ITEMS = loadItems();
+var LOGS = loadLogs();
+var SETTINGS = loadSettings();
+var currentFilter = 'all';
+var sortMode = 'expire';
+
+// ===== 效期分级 =====
+function getDaysLeft(str){var t=new Date();t.setHours(0,0,0,0);var e=new Date(str);e.setHours(0,0,0,0);return Math.round((e-t)/86400000);}
+function getLevel(d){if(d<SETTINGS.severeDays)return'severe';if(d<SETTINGS.urgentDays)return'urgent';if(d<=SETTINGS.warningDays)return'warn';return'ok';}
+var LEVEL_TEXT={severe:'严重',urgent:'紧急',warn:'预警',ok:'正常',all:'全部','药品':'急救药品','物品':'一次性用物'};
+var LEVEL_COLOR={severe:'var(--danger)',urgent:'var(--urgent)',warn:'var(--warn)',ok:'var(--ok)'};
+var LOG_TYPES={inbound:'入库',outbound:'出库',inventory:'盘点',restock:'补货',edit:'编辑',check:'检查',delete:'删除',add:'新增'};
+var LOG_COLORS={inbound:'#4CAF6E',outbound:'#E68A00',inventory:'#1976D2',restock:'#7B1FA2',edit:'#00695C',check:'#C62828',delete:'#C62828',add:'#4CAF6E'};
+function formatDays(d){if(d<0)return'已过期 '+Math.abs(d)+' 天';if(d===0)return'今天到期';return'剩 '+d+' 天';}
+function nowStr(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function addLog(type,detail){LOGS.unshift({type:type,detail:detail,time:nowStr()});if(LOGS.length>200)LOGS=LOGS.slice(0,200);saveLogs();}
+
+// ===== 渲染统计 =====
+function renderStats(){
+  var c={severe:0,urgent:0,warn:0,ok:0};
+  ITEMS.forEach(function(it){c[getLevel(getDaysLeft(it.expire))]++;});
+  document.getElementById('cnt-severe').textContent=c.severe;
+  document.getElementById('cnt-urgent').textContent=c.urgent;
+  document.getElementById('cnt-warn').textContent=c.warn;
+  document.getElementById('cnt-ok').textContent=c.ok;
+  var total=ITEMS.length||1;
+  document.querySelectorAll('.stat').forEach(function(s){
+    var lv=s.dataset.filter;var i=s.querySelector('.dotbar i');if(i)i.style.width=(c[lv]/total*100)+'%';
+  });
+}
+
+// ===== 渲染列表 =====
+function renderList(){
+  var card=document.getElementById('listCard');
+  var title=document.getElementById('listTitle');
+  var fi=document.getElementById('filterInfo');
+  var fit=document.getElementById('filterInfoText');
+  var filtered=ITEMS.map(function(it,idx){return{origIdx:idx,name:it.name,cat:it.cat,batch:it.batch,qty:it.qty,expire:it.expire,loc:it.loc,days:getDaysLeft(it.expire),level:getLevel(getDaysLeft(it.expire))};});
+  if(currentFilter==='severe')filtered=filtered.filter(function(x){return x.level==='severe';});
+  else if(currentFilter==='urgent')filtered=filtered.filter(function(x){return x.level==='urgent';});
+  else if(currentFilter==='warn')filtered=filtered.filter(function(x){return x.level==='warn';});
+  else if(currentFilter==='ok')filtered=filtered.filter(function(x){return x.level==='ok';});
+  else if(currentFilter==='药品')filtered=filtered.filter(function(x){return x.cat==='药品';});
+  else if(currentFilter==='物品')filtered=filtered.filter(function(x){return x.cat==='物品';});
+  if(sortMode==='expire')filtered.sort(function(a,b){return a.days-b.days;});
+  else filtered.sort(function(a,b){return a.name.localeCompare(b.name,'zh');});
+  var wc=ITEMS.filter(function(x){return getLevel(getDaysLeft(x.expire))!=='ok';}).length;
+  if(currentFilter==='all'){title.innerHTML='效期预警 <span class="badge">'+wc+' 项需处理</span>';}
+  else{title.innerHTML=(LEVEL_TEXT[currentFilter]||currentFilter)+' <span class="badge">'+filtered.length+' 项</span>';}
+  if(currentFilter!=='all'){fi.style.display='flex';fit.textContent='当前筛选：'+(LEVEL_TEXT[currentFilter]||currentFilter)+'（共 '+filtered.length+' 项）';}
+  else{fi.style.display='none';}
+  if(filtered.length===0){card.innerHTML='<div class="empty"><div class="icon">✓</div>'+(currentFilter==='all'?'暂无物品':'该分类下暂无物品')+'</div>';return;}
+  var html='';
+  filtered.forEach(function(it){
+    var ct=it.cat==='药品'?'急救药品':'一次性用物';
+    html+='<div class="reminder lv-'+it.level+'" data-idx="'+it.origIdx+'"><span class="mark"></span><div class="info"><div class="name">'+it.name+'</div><div class="meta"><span>'+ct+'</span><span>'+it.batch+'</span><span>'+it.qty+'</span></div></div><div class="right"><div class="days">'+formatDays(it.days)+'</div><div class="date">'+it.expire+'</div></div></div>';
+  });
+  card.innerHTML=html;
+  card.onclick=function(e){var el=e.target.closest('.reminder');if(!el)return;openSheet(parseInt(el.dataset.idx));};
+}
+
+// ===== 详情弹层 =====
+var currentSheetIdx=-1;
+function openSheet(idx){
+  var it=ITEMS[idx];if(!it)return;currentSheetIdx=idx;
+  var days=getDaysLeft(it.expire);var lv=getLevel(days);
+  document.getElementById('sh-name').textContent=it.name;
+  document.getElementById('sh-meta').textContent=(it.cat==='药品'?'急救药品':'一次性用物')+' · '+it.loc;
+  var tag=document.getElementById('sh-tag');tag.textContent=LEVEL_TEXT[lv];
+  tag.style.background=lv==='severe'?'rgba(198,40,40,.12)':lv==='urgent'?'rgba(217,83,79,.12)':lv==='warn'?'rgba(230,162,60,.15)':'rgba(76,175,110,.12)';
+  tag.style.color=LEVEL_COLOR[lv];
+  document.getElementById('sh-batch').textContent=it.batch;
+  document.getElementById('sh-qty').textContent=it.qty;
+  document.getElementById('sh-expire').textContent=it.expire;
+  document.getElementById('sh-days').textContent=formatDays(days);
+  document.getElementById('sh-days').style.color=LEVEL_COLOR[lv];
+  document.getElementById('sh-loc').textContent=it.loc;
+  document.getElementById('sheet').classList.add('show');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeSheet(){document.getElementById('sheet').classList.remove('show');document.getElementById('overlay').classList.remove('show');}
+document.getElementById('overlay').addEventListener('click',closeSheet);
+document.getElementById('sh-close').addEventListener('click',closeSheet);
+document.getElementById('sh-outbound').addEventListener('click',function(){
+  if(currentSheetIdx<0)return;closeSheet();openOutbound(currentSheetIdx);
+});
+document.getElementById('sh-edit').addEventListener('click',function(){
+  if(currentSheetIdx<0)return;closeSheet();openEdit(currentSheetIdx);
+});
+
+// ===== 通用弹层 sheet2 =====
+function openSheet2(title,bodyHtml,confirmText,onConfirm,hideActions){
+  document.getElementById('sheet2Title').innerHTML=title;
+  document.getElementById('sheet2Body').innerHTML=bodyHtml;
+  var actions=document.getElementById('sheet2Actions');
+  if(hideActions){actions.style.display='none';}
+  else{
+    actions.style.display='flex';
+    document.getElementById('sheet2Confirm').textContent=confirmText||'确认';
+    document.getElementById('sheet2Confirm').onclick=onConfirm||closeSheet2;
+  }
+  document.getElementById('sheet2').classList.add('show');
+  document.getElementById('overlay2').classList.add('show');
+}
+function closeSheet2(){document.getElementById('sheet2').classList.remove('show');document.getElementById('overlay2').classList.remove('show');}
+document.getElementById('overlay2').addEventListener('click',closeSheet2);
+document.getElementById('sheet2Cancel').addEventListener('click',closeSheet2);
+
+// ===== 入库登记 =====
+function openInbound(){
+  var html='<div class="form-group"><label>物品名称 *</label><input id="ib-name" placeholder="如：一次性无菌注射器 5ml"></div>'
+    +'<div class="form-row"><div class="form-group"><label>类别</label><select id="ib-cat"><option value="物品">一次性用物</option><option value="药品">急救药品</option></select></div>'
+    +'<div class="form-group"><label>批号</label><input id="ib-batch" placeholder="如：202507A"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>数量</label><input id="ib-qty" placeholder="如：30 支"></div>'
+    +'<div class="form-group"><label>有效期至</label><input id="ib-expire" type="date"></div></div>'
+    +'<div class="form-group"><label>存放位置</label><input id="ib-loc" placeholder="如：抢救车第3层"></div>';
+  openSheet2('📥 入库登记',html,'确认入库',function(){
+    var name=document.getElementById('ib-name').value.trim();
+    var cat=document.getElementById('ib-cat').value;
+    var batch=document.getElementById('ib-batch').value.trim();
+    var qty=document.getElementById('ib-qty').value.trim();
+    var expire=document.getElementById('ib-expire').value;
+    var loc=document.getElementById('ib-loc').value.trim();
+    if(!name){showToast('请填写物品名称');return;}
+    if(!expire){showToast('请选择有效期');return;}
+    if(!qty)qty='1';
+    if(!loc)loc='未指定';
+    if(!batch)batch='-';
+    ITEMS.push({name:name,cat:cat,batch:batch,qty:qty,expire:expire,loc:loc});
+    saveItems();addLog('inbound','入库：'+name+'（'+qty+'，有效期至'+expire+'）');
+    renderStats();renderList();closeSheet2();showToast('入库成功：'+name);
+  });
+}
+
+// ===== 出库登记 =====
+function openOutbound(idx){
+  var it=ITEMS[idx];if(!it)return;
+  var html='<div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px;">'
+    +'<div style="font-weight:600;font-size:15px;">'+it.name+'</div>'
+    +'<div style="font-size:12px;color:var(--text-sub);margin-top:4px;">'+(it.cat==='药品'?'急救药品':'一次性用物')+' · '+it.batch+' · 当前库存：'+it.qty+'</div></div>'
+    +'<div class="form-group"><label>出库数量</label><input id="ob-num" type="number" min="1" placeholder="如：5"></div>'
+    +'<div class="form-group"><label>出库原因</label><select id="ob-reason"><option value="使用消耗">使用消耗</option><option value="过期销毁">过期销毁</option><option value="损坏丢失">损坏丢失</option><option value="调拨转移">调拨转移</option><option value="其他">其他</option></select></div>'
+    +'<div class="form-group"><label>备注（选填）</label><textarea id="ob-note" rows="2" placeholder="补充说明"></textarea></div>';
+  openSheet2('📤 出库登记',html,'确认出库',function(){
+    var num=parseInt(document.getElementById('ob-num').value);
+    var reason=document.getElementById('ob-reason').value;
+    var note=document.getElementById('ob-note').value.trim();
+    if(!num||num<1){showToast('请填写出库数量');return;}
+    var m=it.qty.match(/^(\d+)\s*(.*)$/);
+    var curNum=m?parseInt(m[1]):0;var unit=m?m[2]:'';
+    if(num>curNum){showToast('出库数量超过库存');return;}
+    var newNum=curNum-num;
+    if(newNum>0){ITEMS[idx].qty=newNum+(unit?' '+unit:'');}
+    else{ITEMS.splice(idx,1);}
+    saveItems();addLog('outbound','出库：'+it.name+'（'+num+(unit?' '+unit:'')+','+reason+(note?'，'+note:'')+'）');
+    renderStats();renderList();closeSheet2();showToast('出库成功');
+  });
+}
+
+// ===== 盘点封存 =====
+function openInventory(){
+  var html='<div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;color:var(--text-sub);">'
+    +'本次盘点将记录当前所有物品状态，并封存盘点记录。盘点后系统自动更新"最近盘点"日期。</div>'
+    +'<div class="form-group"><label>盘点人</label><input id="iv-person" placeholder="如：张护士"></div>'
+    +'<div class="form-group"><label>盘点备注（选填）</label><textarea id="iv-note" rows="2" placeholder="异常情况说明"></textarea></div>'
+    +'<div style="background:var(--primary-light);border-radius:10px;padding:12px;font-size:13px;">'
+    +'当前物品总数：<b>'+ITEMS.length+'</b> 项<br>'
+    +'需处理（严重+紧急+预警）：<b style="color:var(--warn);">'+ITEMS.filter(function(x){return getLevel(getDaysLeft(x.expire))!=='ok';}).length+'</b> 项<br>'
+    +'正常：<b style="color:var(--ok);">'+ITEMS.filter(function(x){return getLevel(getDaysLeft(x.expire))==='ok';}).length+'</b> 项</div>';
+  openSheet2('🔒 盘点封存',html,'确认封存',function(){
+    var person=document.getElementById('iv-person').value.trim();
+    var note=document.getElementById('iv-note').value.trim();
+    if(!person){showToast('请填写盘点人');return;}
+    var d=nowStr();SETTINGS.lastInventory=d.split(' ')[0];saveSettings();
+    document.getElementById('inventoryDate').textContent=SETTINGS.lastInventory;
+    addLog('inventory','盘点封存：共'+ITEMS.length+'项，盘点人：'+person+(note?'，'+note:''));
+    closeSheet2();showToast('盘点封存成功，日期已更新');
+  });
+}
+
+// ===== 检查日期 =====
+function openCheckDate(){
+  var html='<div class="form-group"><label>检查截止日期</label><input id="cd-date" type="date" value="'+nowStr().split(' ')[0]+'"></div>'
+    +'<div style="background:var(--bg);border-radius:10px;padding:12px;font-size:13px;color:var(--text-sub);margin-bottom:14px;">'
+    +'系统将检查在该日期前到期的所有物品</div>';
+  openSheet2('🔍 检查日期',html,'开始检查',function(){
+    var date=document.getElementById('cd-date').value;
+    if(!date){showToast('请选择日期');return;}
+    var expiring=ITEMS.filter(function(it){return getDaysLeft(it.expire)<=getDaysLeft(date);});
+    var html2='<div style="font-size:13px;color:var(--text-sub);margin-bottom:12px;">截至 <b>'+date+'</b>，共 <b style="color:var(--danger);">'+expiring.length+'</b> 项物品到期或即将到期：</div>';
+    if(expiring.length===0){html2+='<div class="empty"><div class="icon">✓</div>该日期前无物品到期</div>';}
+    else{
+      html2+='<div class="log-list">';
+      expiring.sort(function(a,b){return getDaysLeft(a.expire)-getDaysLeft(b.expire);});
+      expiring.forEach(function(it){
+        var d=getDaysLeft(it.expire);var lv=getLevel(d);
+        html2+='<div class="log-item"><div class="log-head"><span class="log-type" style="background:'+('rgba(198,40,40,.1)'+';color:'+LEVEL_COLOR[lv])+'">'+LEVEL_TEXT[lv]+'</span><span class="log-time">'+it.expire+'</span></div><div class="log-detail">'+it.name+'（'+it.qty+'，'+formatDays(d)+'）</div></div>';
+      });
+      html2+='</div>';
+    }
+    addLog('check','检查日期：截至'+date+'，'+expiring.length+'项到期');
+    openSheet2('🔍 检查结果',html2,'',null,true);
+    document.getElementById('sheet2Actions').style.display='flex';
+    document.getElementById('sheet2Confirm').textContent='知道了';
+    document.getElementById('sheet2Confirm').onclick=closeSheet2;
+  });
+}
+
+// ===== 批量补货 =====
+function openRestock(){
+  var lowItems=ITEMS.map(function(it,idx){var m=it.qty.match(/^(\d+)/);return{name:it.name,qty:it.qty,num:m?parseInt(m[1]):0,origIdx:idx};}).filter(function(x){return x.num<=5;});
+  if(lowItems.length===0){
+    openSheet2('📦 批量补货','<div class="empty"><div class="icon">✓</div>当前无低库存物品（库存≤5的物品）</div>','',null,true);
+    document.getElementById('sheet2Actions').style.display='flex';
+    document.getElementById('sheet2Confirm').textContent='知道了';
+    document.getElementById('sheet2Confirm').onclick=closeSheet2;
+    return;
+  }
+  var html='<div style="font-size:13px;color:var(--text-sub);margin-bottom:12px;">以下物品库存较低（≤5），勾选需要补货的物品并填写补货数量：</div>';
+  lowItems.forEach(function(it,i){
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);">'
+      +'<input type="checkbox" id="rs-check-'+i+'" checked style="width:18px;height:18px;">'
+      +'<div style="flex:1;"><div style="font-size:14px;font-weight:500;">'+it.name+'</div><div style="font-size:12px;color:var(--text-sub);">当前：'+it.qty+'</div></div>'
+      +'<input id="rs-num-'+i+'" type="number" min="1" value="10" style="width:60px;padding:6px;border:1px solid var(--line);border-radius:8px;text-align:center;"></div>';
+  });
+  openSheet2('📦 批量补货',html,'确认补货',function(){
+    var count=0;
+    lowItems.forEach(function(it,i){
+      var check=document.getElementById('rs-check-'+i);
+      if(check&&check.checked){
+        var num=parseInt(document.getElementById('rs-num-'+i).value);
+        if(!num||num<1)return;
+        var m=ITEMS[it.origIdx].qty.match(/^(\d+)\s*(.*)$/);
+        var curNum=m?parseInt(m[1]):0;var unit=m?m[2]:'';
+        ITEMS[it.origIdx].qty=(curNum+num)+(unit?' '+unit:'');
+        addLog('restock','补货：'+it.name+'（+ '+num+(unit?' '+unit:'')+'，现'+ITEMS[it.origIdx].qty+'）');
+        count++;
+      }
+    });
+    if(count>0){saveItems();renderList();showToast('已补货 '+count+' 项');closeSheet2();}
+    else{showToast('未选择补货物品');}
+  });
+}
+
+// ===== 操作记录 =====
+function openLog(){
+  var html='';
+  if(LOGS.length===0){html='<div class="empty"><div class="icon">📝</div>暂无操作记录</div>';}
+  else{
+    html+='<div class="log-list">';
+    LOGS.forEach(function(lg){
+      html+='<div class="log-item"><div class="log-head"><span class="log-type" style="background:rgba(0,0,0,.05);color:'+(LOG_COLORS[lg.type]||'#666')+';">'+(LOG_TYPES[lg.type]||lg.type)+'</span><span class="log-time">'+lg.time+'</span></div><div class="log-detail">'+lg.detail+'</div></div>';
+    });
+    html+='</div>';
+    html+='<div style="margin-top:14px;text-align:center;"><button class="btn-danger" id="clearLog" style="padding:8px 20px;border-radius:8px;font-size:13px;">清空记录</button></div>';
+  }
+  openSheet2('📝 操作记录',html,'',null,true);
+  document.getElementById('sheet2Actions').style.display='flex';
+  document.getElementById('sheet2Confirm').textContent='关闭';
+  document.getElementById('sheet2Confirm').onclick=closeSheet2;
+  var cl=document.getElementById('clearLog');
+  if(cl)cl.onclick=function(){LOGS=[];saveLogs();closeSheet2();showToast('操作记录已清空');};
+}
+
+// ===== 系统设置 =====
+function openSettings(){
+  var html='<div class="setting-item"><div><div class="s-label">科室名称</div><div class="s-desc">显示在顶部信息卡片</div></div><div class="s-val" id="set-dept-val">'+SETTINGS.dept+'</div></div>'
+    +'<div class="setting-item"><div><div class="s-label">严重预警（天）</div><div class="s-desc">剩余天数低于此值标为严重</div></div><div class="s-val" id="set-severe-val">'+SETTINGS.severeDays+' 天</div></div>'
+    +'<div class="setting-item"><div><div class="s-label">紧急预警（天）</div><div class="s-desc">剩余天数低于此值标为紧急</div></div><div class="s-val" id="set-urgent-val">'+SETTINGS.urgentDays+' 天</div></div>'
+    +'<div class="setting-item"><div><div class="s-label">一般预警（天）</div><div class="s-desc">剩余天数低于此值标为预警</div></div><div class="s-val" id="set-warn-val">'+SETTINGS.warningDays+' 天</div></div>'
+    +'<div class="setting-item"><div><div class="s-label">最近盘点日期</div><div class="s-desc">上次盘点封存日期</div></div><div class="s-val">'+SETTINGS.lastInventory+'</div></div>'
+    +'<div class="setting-item"><div><div class="s-label">数据条目</div><div class="s-desc">当前存储的物品总数</div></div><div class="s-val">'+ITEMS.length+' 项</div></div>'
+    +'<div class="setting-item"><div><div class="s-label">操作记录</div><div class="s-desc">累计操作记录数</div></div><div class="s-val">'+LOGS.length+' 条</div></div>'
+    +'<div style="margin-top:18px;"><div class="form-group"><label>修改科室名称</label><input id="set-dept-input" value="'+SETTINGS.dept+'"></div>'
+    +'<div class="form-row"><div class="form-group"><label>严重天数</label><input id="set-severe-input" type="number" value="'+SETTINGS.severeDays+'"></div>'
+    +'<div class="form-group"><label>紧急天数</label><input id="set-urgent-input" type="number" value="'+SETTINGS.urgentDays+'"></div>'
+    +'<div class="form-group"><label>预警天数</label><input id="set-warn-input" type="number" value="'+SETTINGS.warningDays+'"></div></div></div>'
+    +'<div style="margin-top:14px;text-align:center;"><button class="btn-danger" id="resetData" style="padding:8px 20px;border-radius:8px;font-size:13px;">重置全部数据</button></div>';
+  openSheet2('⚙️ 系统设置',html,'保存设置',function(){
+    var dept=document.getElementById('set-dept-input').value.trim();
+    var sv=parseInt(document.getElementById('set-severe-input').value);
+    var uv=parseInt(document.getElementById('set-urgent-input').value);
+    var wv=parseInt(document.getElementById('set-warn-input').value);
+    if(dept)SETTINGS.dept=dept;
+    if(sv>=0)SETTINGS.severeDays=sv;
+    if(uv>sv)SETTINGS.urgentDays=uv;
+    if(wv>uv)SETTINGS.warningDays=wv;
+    saveSettings();renderHero();renderStats();renderList();closeSheet2();showToast('设置已保存');
+  });
+  var rd=document.getElementById('resetData');
+  if(rd)rd.onclick=function(){
+    ITEMS=DEFAULT_ITEMS.slice();LOGS=[];SETTINGS=Object.assign({},DEFAULT_SETTINGS);
+    saveItems();saveLogs();saveSettings();
+    document.getElementById('inventoryDate').textContent=SETTINGS.lastInventory;
+    renderHero();renderStats();renderList();closeSheet2();showToast('数据已重置为默认');
+  };
+}
+
+// ===== 编辑物品 =====
+function openEdit(idx){
+  var it=ITEMS[idx];if(!it)return;
+  var html='<div class="form-group"><label>物品名称</label><input id="ed-name" value="'+it.name+'"></div>'
+    +'<div class="form-row"><div class="form-group"><label>类别</label><select id="ed-cat"><option value="物品"'+(it.cat==='物品'?' selected':'')+'>一次性用物</option><option value="药品"'+(it.cat==='药品'?' selected':'')+'>急救药品</option></select></div>'
+    +'<div class="form-group"><label>批号</label><input id="ed-batch" value="'+it.batch+'"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>数量</label><input id="ed-qty" value="'+it.qty+'"></div>'
+    +'<div class="form-group"><label>有效期至</label><input id="ed-expire" type="date" value="'+it.expire+'"></div></div>'
+    +'<div class="form-group"><label>存放位置</label><input id="ed-loc" value="'+it.loc+'"></div>';
+  openSheet2('✏️ 编辑物品',html,'保存修改',function(){
+    var name=document.getElementById('ed-name').value.trim();
+    var expire=document.getElementById('ed-expire').value;
+    if(!name){showToast('请填写物品名称');return;}
+    if(!expire){showToast('请选择有效期');return;}
+    var oldName=ITEMS[idx].name;
+    ITEMS[idx].name=name;
+    ITEMS[idx].cat=document.getElementById('ed-cat').value;
+    ITEMS[idx].batch=document.getElementById('ed-batch').value.trim()||'-';
+    ITEMS[idx].qty=document.getElementById('ed-qty').value.trim()||'1';
+    ITEMS[idx].expire=expire;
+    ITEMS[idx].loc=document.getElementById('ed-loc').value.trim()||'未指定';
+    saveItems();addLog('edit','编辑：'+oldName+' → '+name);
+    renderStats();renderList();closeSheet2();showToast('修改已保存');
+  });
+}
+
+// ===== 导出数据 =====
+function openExport(){
+  var data=JSON.stringify({items:ITEMS,logs:LOGS,settings:SETTINGS,exportTime:nowStr()},null,2);
+  var html='<div style="font-size:13px;color:var(--text-sub);margin-bottom:12px;">导出当前全部数据（'+ITEMS.length+' 项物品，'+LOGS.length+' 条记录），可复制保存：</div>'
+    +'<textarea readonly style="width:100%;height:200px;padding:10px;border:1px solid var(--line);border-radius:10px;font-size:11px;font-family:monospace;background:var(--bg);">'+data+'</textarea>'
+    +'<div style="margin-top:10px;text-align:center;font-size:12px;color:var(--text-sub);">长按文本可全选复制</div>';
+  openSheet2('💾 导出数据',html,'',null,true);
+  document.getElementById('sheet2Actions').style.display='flex';
+  document.getElementById('sheet2Confirm').textContent='关闭';
+  document.getElementById('sheet2Confirm').onclick=closeSheet2;
+}
+
+// ===== 一键出库（清空全部库存）=====
+function openClearAll(){
+  if(ITEMS.length===0){showToast('库存已为空');return;}
+  var html='<div style="background:rgba(198,40,40,.08);border:1px solid rgba(198,40,40,.2);border-radius:10px;padding:14px;margin-bottom:14px;">'
+    +'<div style="font-size:14px;font-weight:600;color:var(--danger);margin-bottom:6px;">⚠️ 危险操作</div>'
+    +'<div style="font-size:13px;color:var(--text);line-height:1.6;">此操作将清空全部库存（共 <b>'+ITEMS.length+'</b> 项物品），出库后不可恢复，请谨慎操作。</div></div>'
+    +'<div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;">'
+    +'<div style="font-weight:600;margin-bottom:6px;">出库汇总：</div>'
+    +'<div style="color:var(--text-sub);">药品：'+ITEMS.filter(function(x){return x.cat==='药品';}).length+' 项</div>'
+    +'<div style="color:var(--text-sub);">物品：'+ITEMS.filter(function(x){return x.cat==='物品';}).length+' 项</div></div>'
+    +'<div class="form-group"><label>操作人</label><input id="ca-person" placeholder="请填写操作人姓名"></div>'
+    +'<div class="form-group"><label>出库原因</label><select id="ca-reason"><option value="科室搬迁">科室搬迁</option><option value="抢救车更换">抢救车更换</option><option value="批量过期销毁">批量过期销毁</option><option value="年终盘点清零">年终盘点清零</option><option value="其他">其他</option></select></div>'
+    +'<div class="form-group"><label>备注（选填）</label><textarea id="ca-note" rows="2" placeholder="补充说明"></textarea></div>';
+  openSheet2('🗑️ 一键出库',html,'确认清空',function(){
+    var person=document.getElementById('ca-person').value.trim();
+    var reason=document.getElementById('ca-reason').value;
+    var note=document.getElementById('ca-note').value.trim();
+    if(!person){showToast('请填写操作人');return;}
+    var count=ITEMS.length;
+    var drugCount=ITEMS.filter(function(x){return x.cat==='药品';}).length;
+    var supplyCount=count-drugCount;
+    addLog('outbound','一键出库：清空全部库存（共'+count+'项，药品'+drugCount+'项，物品'+supplyCount+'项），操作人：'+person+'，原因：'+reason+(note?'，'+note:''));
+    ITEMS=[];saveItems();renderStats();renderList();closeSheet2();showToast('已清空全部库存（'+count+' 项）');
+  });
+}
+
+// ===== 快捷操作绑定 =====
+document.querySelector('.qa-grid').addEventListener('click',function(e){
+  var item=e.target.closest('.qa-item');if(!item)return;
+  var action=item.dataset.action;
+  if(action==='inbound')openInbound();
+  else if(action==='outbound'){
+    if(ITEMS.length===0){showToast('暂无物品');return;}
+    openSheet2('📤 出库登记','<div style="font-size:13px;color:var(--text-sub);margin-bottom:12px;">请从列表中点击对应物品进行出库登记</div>','',null,true);
+    document.getElementById('sheet2Actions').style.display='flex';
+    document.getElementById('sheet2Confirm').textContent='知道了';
+    document.getElementById('sheet2Confirm').onclick=closeSheet2;
+  }
+  else if(action==='inventory')openInventory();
+  else if(action==='checkdate')openCheckDate();
+  else if(action==='restock')openRestock();
+  else if(action==='log')openLog();
+  else if(action==='settings')openSettings();
+  else if(action==='export')openExport();
+  else if(action==='clearall')openClearAll();
+});
+
+// ===== 筛选交互 =====
+function syncSelection(filter){
+  document.querySelectorAll('.chip').forEach(function(c){if(c.dataset.filter===filter)c.classList.add('active');else c.classList.remove('active');});
+  document.querySelectorAll('.stat').forEach(function(s){if(s.dataset.filter===filter)s.classList.add('selected');else s.classList.remove('selected');});
+  var navPage='overview';if(filter==='药品')navPage='drug';else if(filter==='物品')navPage='supply';
+  document.querySelectorAll('.nav a').forEach(function(a){if(a.dataset.page===navPage)a.classList.add('active');else a.classList.remove('active');});
+}
+document.getElementById('filterBar').addEventListener('click',function(e){
+  var chip=e.target.closest('.chip');if(!chip)return;var f=chip.dataset.filter;
+  currentFilter=f;syncSelection(f);renderList();showToast('已筛选：'+(LEVEL_TEXT[f]||f));
+});
+document.querySelectorAll('.stat').forEach(function(s){
+  s.addEventListener('click',function(){var f=s.dataset.filter;currentFilter=f;syncSelection(f);renderList();showToast('已筛选：'+(LEVEL_TEXT[f]||f));});
+});
+document.getElementById('clearFilter').addEventListener('click',function(){currentFilter='all';syncSelection('all');renderList();showToast('已清除筛选');});
+document.getElementById('sortBtn').addEventListener('click',function(){
+  sortMode=sortMode==='expire'?'name':'expire';
+  document.getElementById('sortBtn').textContent=sortMode==='expire'?'按效期排序 ›':'按名称排序 ›';
+  renderList();showToast(sortMode==='expire'?'已按效期排序':'已按名称排序');
+});
+
+// ===== 底部导航 =====
+document.getElementById('nav').addEventListener('click',function(e){
+  e.preventDefault();var a=e.target.closest('a');if(!a)return;var page=a.dataset.page;
+  if(page==='settings'){openSettings();return;}
+  var f='all';if(page==='overview')f='all';else if(page==='drug')f='药品';else if(page==='supply')f='物品';
+  currentFilter=f;syncSelection(f);renderList();
+});
+
+// ===== Toast =====
+var toastTimer;
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},1500);}
+
+// ===== 更新盘点日期 =====
+function updateInventoryDate(){document.getElementById('inventoryDate').textContent=SETTINGS.lastInventory;}
+function renderHero(){
+  document.getElementById('heroEyebrow').textContent=SETTINGS.dept+'药品及一次性用物管理';
+  document.getElementById('heroTitle').innerHTML=SETTINGS.dept+'<br>一次性物品及药品有效期管理';
+}
+
+// ===== PWA =====
+
+
+// ===== 初始化 =====
+renderHero();updateInventoryDate();renderStats();renderList();
+</script>
+<script>
+if('serviceWorker' in navigator){
+  var swCode = "// service worker - 网络优先策略，确保始终拿到最新版本\nconst CACHE = 'expmgr-v7';\nconst ASSETS = [\n  './index.html',\n  './manifest.json',\n  './icons/icon-192.png',\n  './icons/icon-512.png'\n];\nself.addEventListener('install', e => {\n  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));\n});\nself.addEventListener('activate', e => {\n  e.waitUntil(\n    caches.keys().then(keys => Promise.all(\n      keys.filter(k => k !== CACHE).map(k => caches.delete(k))\n    )).then(() => self.clients.claim())\n  );\n});\n// 网络优先：先请求网络，拿到最新版本；网络失败才回退缓存\nself.addEventListener('fetch', e => {\n  if (e.request.method !== 'GET') return;\n  e.respondWith(\n    fetch(e.request).then(resp => {\n      const copy = resp.clone();\n      caches.open(CACHE).then(c => c.put(e.request, copy));\n      return resp;\n    }).catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))\n  );\n});\n";
+  var blob = new Blob([swCode], {type: 'application/javascript'});
+  var swUrl = URL.createObjectURL(blob);
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register(swUrl).catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
