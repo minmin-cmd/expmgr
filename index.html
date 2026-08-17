@@ -974,15 +974,79 @@ function openEdit(idx){
 }
 
 // ===== 导出数据 =====
+// CSV 工具：把二维数组转成 CSV 字符串（含 BOM，避免中文乱码）
+function toCsv(rows){
+  var lines=rows.map(function(row){
+    return row.map(function(cell){
+      var s=cell==null?'':String(cell);
+      // 若包含逗号、引号、换行则用引号包裹并转义内部引号
+      if(/[",\n]/.test(s)){s='"'+s.replace(/"/g,'""')+'"';}
+      return s;
+    }).join(',');
+  });
+  return '\ufeff'+lines.join('\r\n');
+}
+// 触发浏览器下载
+function downloadText(filename,content,type){
+  var blob=new Blob([content],{type:type||'text/plain;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();
+  setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},100);
+}
+
 function openExport(){
-  var data=JSON.stringify({items:ITEMS,logs:LOGS,settings:SETTINGS,charge:CHARGE,exportTime:nowStr()},null,2);
-  var html='<div style="font-size:13px;color:var(--text-sub);margin-bottom:12px;">导出当前全部数据（'+ITEMS.length+' 项物品，'+LOGS.length+' 条记录，'+CHARGE.devices.length+' 台充电设备），可复制保存：</div>'
-    +'<textarea readonly style="width:100%;height:200px;padding:10px;border:1px solid var(--line);border-radius:10px;font-size:11px;font-family:monospace;background:var(--bg);">'+data+'</textarea>'
-    +'<div style="margin-top:10px;text-align:center;font-size:12px;color:var(--text-sub);">长按文本可全选复制</div>';
+  // —— 物品表格 ——
+  var itemRows=[['名称','类别','批号','数量','有效期至','存放位置','剩余天数','状态']];
+  ITEMS.forEach(function(it){
+    var d=getDaysLeft(it.expire);var lv=getLevel(d);
+    itemRows.push([it.name,it.cat==='药品'?'急救药品':'一次性用物',it.batch,it.qty,it.expire,it.loc,formatDays(d),LEVEL_TEXT[lv]]);
+  });
+  // 按剩余天数排序
+  var header=itemRows.shift();
+  itemRows.sort(function(a,b){var da=parseInt(a[6].replace(/[^\d]/g,''))||0;var db=parseInt(b[6].replace(/[^\d]/g,''))||0;return da-db;});
+  itemRows.unshift(header);
+  var itemCsv=toCsv(itemRows);
+
+  // —— 充电设备表格 ——
+  var chargeRows=[['设备名称','上次充电','下次充电','剩余天数','状态']];
+  CHARGE.devices.forEach(function(dev){
+    var next=getNextChargeDate(dev);var days=getChargeDaysLeft(dev);
+    var status=days<0?'已逾期 '+Math.abs(days)+' 天':(days<=SETTINGS.chargeRemindDays?'需充电（剩'+days+'天）':'正常（剩'+days+'天）');
+    chargeRows.push([dev.name,dev.lastCharge,next,formatDays(days),status]);
+  });
+  var chargeCsv=toCsv(chargeRows);
+
+  // —— 生成弹层预览 ——
+  var html='<div style="font-size:13px;color:var(--text-sub);margin-bottom:12px;">'
+    +'点击下方按钮可下载表格文件（Excel / WPS 可直接打开）：</div>'
+    +'<div class="actions" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">'
+    +'<button id="dl-items" style="flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;background:var(--primary);color:#fff;">📄 下载「物品清单」表格（'+ITEMS.length+' 行）</button>'
+    +'<button id="dl-charge" style="flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;background:var(--charge);color:#fff;">🔋 下载「充电管理」表格（'+CHARGE.devices.length+' 台）</button>'
+    +'<button id="dl-all" style="flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;background:#7B1FA2;color:#fff;">📦 下载「全部数据」表格</button>'
+    +'</div>'
+    +'<div style="background:var(--bg);border-radius:10px;padding:10px;font-size:12px;color:var(--text-sub);">'
+    +'小提示：下载后是 <b>.csv</b> 表格文件，用 Excel / WPS / 手机表格 App 打开即可。</div>'
+    +'<div style="font-size:12px;color:var(--text-sub);margin-top:14px;">— 物品清单预览（前 5 行）—</div>'
+    +'<div style="overflow-x:auto;margin-top:6px;"><table style="border-collapse:collapse;font-size:11px;width:100%;">';
+  var previewRows=itemRows.slice(0,5);
+  html+='<tr>';header.forEach(function(h){html+='<th style="border:1px solid var(--line);padding:4px 6px;background:var(--primary-light);color:var(--text);font-weight:600;white-space:nowrap;">'+h+'</th>';});html+='</tr>';
+  previewRows.forEach(function(r){html+='<tr>';r.forEach(function(c){html+='<td style="border:1px solid var(--line);padding:4px 6px;white-space:nowrap;">'+c+'</td>';});html+='</tr>';});
+  html+='</table></div>';
+
   openSheet2('💾 导出数据',html,'',null,true);
   document.getElementById('sheet2Actions').style.display='flex';
   document.getElementById('sheet2Confirm').textContent='关闭';
   document.getElementById('sheet2Confirm').onclick=closeSheet2;
+
+  var today=nowStr().split(' ')[0];
+  document.getElementById('dl-items').onclick=function(){downloadText('效期管家-物品清单-'+today+'.csv',itemCsv,'text/csv;charset=utf-8');showToast('已下载物品清单');};
+  document.getElementById('dl-charge').onclick=function(){downloadText('效期管家-充电管理-'+today+'.csv',chargeCsv,'text/csv;charset=utf-8');showToast('已下载充电管理');};
+  document.getElementById('dl-all').onclick=function(){
+    var all=itemCsv+'\r\n\r\n\r\n'+chargeCsv;
+    downloadText('效期管家-全部数据-'+today+'.csv',all,'text/csv;charset=utf-8');showToast('已下载全部数据');
+  };
 }
 
 // ===== 一键出库（清空全部库存）=====
