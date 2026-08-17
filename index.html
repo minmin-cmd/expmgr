@@ -327,7 +327,6 @@ input,select,textarea{font-family:inherit;font-size:14px;}
     <div class="qa-item" data-action="settings"><div class="qa-icon c7">⚙️</div><div class="qa-label">系统设置</div></div>
     <div class="qa-item" data-action="export"><div class="qa-icon c8">💾</div><div class="qa-label">导出数据</div></div>
     <div class="qa-item" data-action="clearall"><div class="qa-icon c4">🗑️</div><div class="qa-label">一键出库</div></div>
-    <div class="qa-item" data-action="overview"><div class="qa-icon c1">🏠</div><div class="qa-label">全部</div></div>
     <div class="qa-item" data-action="drug"><div class="qa-icon c3">💊</div><div class="qa-label">药品</div></div>
     <div class="qa-item" data-action="supply"><div class="qa-icon c2">🧰</div><div class="qa-label">物品</div></div>
   </div>
@@ -1095,7 +1094,6 @@ document.querySelector('.qa-grid').addEventListener('click',function(e){
   else if(action==='settings')openSettings();
   else if(action==='export')openExport();
   else if(action==='clearall')openClearAll();
-  else if(action==='overview'){currentFilter='all';syncSelection('all');renderList();showToast('已显示全部');}
   else if(action==='drug'){currentFilter='药品';syncSelection('药品');renderList();showToast('已筛选：急救药品');}
   else if(action==='supply'){currentFilter='物品';syncSelection('物品');renderList();showToast('已筛选：一次性用物');}
 });
